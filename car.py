@@ -66,10 +66,22 @@ if uploaded_file is not None:
             st.write(f"النص المستخرج من لوحة الأرقام: {plate_text}")
 
             # إضافة النص المستخرج إلى ملف نصي
-            with open("ملف_النص_المستخرج_من_لوحة_السيارات.txt", "a") as file:  # استخدام 'a' لإضافة النص
+            with open("ملف_النص_المستخرج_من_لوحة_السيارات.txt", "a") as file:
                 file.write(f"Extracted Number Plate Text: {plate_text}\n")
 
             st.write("تم إضافة نص لوحة الأرقام إلى ملف_النص_المستخرج_من_لوحة_السيارات")
+
+            # قراءة الملف وتحضيره للتنزيل
+            with open("ملف_النص_المستخرج_من_لوحة_السيارات.txt", "r") as file:
+                file_contents = file.read()
+
+            # زر لتحميل ملف النصوص
+            st.download_button(
+                label="تحميل ملف النصوص",
+                data=file_contents,
+                file_name="لوحات_السيارات.txt",
+                mime="text/plain"
+            )
         else:
             st.write("لم يتم اكتشاف أي نص في لوحة الأرقام.")
     else:
