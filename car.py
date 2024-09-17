@@ -82,6 +82,26 @@ if uploaded_file is not None:
                 file_name="لوحات_السيارات.txt",
                 mime="text/plain"
             )
+
+            # إدخال النص الصحيح للوحة الأرقام للتحقق من الأداء
+            true_plate_text = st.text_input("أدخل النص الصحيح للوحة الأرقام للتحقق من الأداء:")
+
+            if true_plate_text:
+                # حساب الدقة (Accuracy)
+                accuracy = sum(1 for a, b in zip(plate_text, true_plate_text) if a == b) / len(true_plate_text)
+                error_rate = 1 - accuracy
+
+                # حساب الحساسية (Recall) والدقة (Precision)
+                correct_characters = sum(1 for a, b in zip(plate_text, true_plate_text) if a == b)
+                recall = correct_characters / len(true_plate_text)  # مقارنة بالنص الحقيقي
+                precision = correct_characters / len(plate_text)  # مقارنة بالنص المكتشف
+
+                # عرض المقاييس
+                st.write(f"الدقة: {accuracy * 100:.2f}%")
+                st.write(f"معدل الخطأ: {error_rate * 100:.2f}%")
+                st.write(f"الحساسية: {recall * 100:.2f}%")
+                st.write(f"الدقة: {precision * 100:.2f}%")
+
         else:
             st.write("لم يتم اكتشاف أي نص في لوحة الأرقام.")
     else:
